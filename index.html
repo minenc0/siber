@@ -24,7 +24,7 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
   <script>
-    fetch("https://sheetdb.io/api/v1/alr3r7emzaexa?sheet=Sheet2")
+    fetch("https://sheetdb.io/api/v1/alr3r7emzaexa")
       .then(res => res.json())
       .then(json => {
         // Pastikan kalau JSON dari API adalah array
@@ -33,10 +33,10 @@
         let tbody = document.querySelector("#laporan tbody");
         data.forEach(row => {
           let tr = document.createElement("tr");
-          tr.innerHTML = `<td>${row["Nama"] || ""}</td>
-                          <td>${row["Pangkat"] || ""}</td>
-                          <td>${row["No AK"] || ""}</td>
-                          <td>${row["Total Skor"] || ""}</td>`;
+          tr.innerHTML = `<td>${row["Column 2"] || ""}</td>
+                          <td>${row["Column 4"] || ""}</td>
+                          <td>${row["Column 3"] || ""}</td>
+                          <td>${row["Column 15"] || ""}</td>`;
           tbody.appendChild(tr);
         });
 
@@ -50,3 +50,4 @@
   </script>
 </body>
 </html>
+
