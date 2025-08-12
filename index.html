@@ -24,36 +24,29 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
   <script>
-    fetch("https://sheetdb.io/api/v1/alr3r7emzaexa?sheet=Sheet2") // Ganti dengan endpoint kamu
+    fetch("https://sheetdb.io/api/v1/alr3r7emzaexa?sheet=Sheet2")
       .then(res => res.json())
-      .then(data => {
+      .then(json => {
+        // Pastikan kalau JSON dari API adalah array
+        let data = Array.isArray(json) ? json : json.data;
+
         let tbody = document.querySelector("#laporan tbody");
         data.forEach(row => {
           let tr = document.createElement("tr");
-        tr.innerHTML = `<td>${row["Nama"] || ""}</td>
-                        <td>${row["Pangkat"] || ""}</td>
-                        <td>${row["No AK"] || ""}</td>
-                        <td>${row["Total Skor"] || ""}</td>`;
+          tr.innerHTML = `<td>${row["Nama"] || ""}</td>
+                          <td>${row["Pangkat"] || ""}</td>
+                          <td>${row["No AK"] || ""}</td>
+                          <td>${row["Total Skor"] || ""}</td>`;
           tbody.appendChild(tr);
         });
 
-        // Aktifkan DataTables dengan 10 baris per halaman
         $('#laporan').DataTable({
           "pageLength": 10
         });
+      })
+      .catch(err => {
+        console.error("Gagal mengambil data:", err);
       });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
