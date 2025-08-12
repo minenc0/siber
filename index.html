@@ -24,7 +24,7 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
   <script>
-    fetch("https://sheetdb.io/api/v1/o3yopv602bllz") // Ganti dengan endpoint kamu
+    fetch("https://sheetdb.io/api/v1/o3yopv602bllz?sheet=Sheet2") // Ganti dengan endpoint kamu
       .then(res => res.json())
       .then(data => {
         let tbody = document.querySelector("#laporan tbody");
@@ -45,4 +45,5 @@
   </script>
 </body>
 </html>
+
 
