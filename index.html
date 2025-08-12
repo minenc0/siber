@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Dinamis</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <h1>Laporan Dinamis</h1>
+  <table id="laporan">
+    <thead>
+      <tr><th>Nama</th><th>Pangkat</th><th>No AK</th><th>Nilai</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- jQuery & DataTables -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    fetch("https://sheetdb.io/api/v1/hkea2kvolhnw1") // Ganti dengan endpoint kamu
+      .then(res => res.json())
+      .then(data => {
+        let tbody = document.querySelector("#laporan tbody");
+        data.forEach(row => {
+          let tr = document.createElement("tr");
+          tr.innerHTML = `<td>${row.Nama}</td>
+                          <td>${row.Pangkat}</td>
+                          <td>${row.No_AK}</td>
+                          <td>${row.Nilai}</td>`;
+          tbody.appendChild(tr);
+        });
+
+        // Aktifkan DataTables dengan 10 baris per halaman
+        $('#laporan').DataTable({
+          "pageLength": 10
+        });
+      });
+  </script>
+</body>
+</html>
