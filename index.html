@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Secure PDF Viewer</title>
 
+<style>
+body {
+    margin: 0;
+    background: #111;
+    user-select: none;
+}
+
+/* Container scroll */
+#viewer {
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+/* Canvas per halaman */
+canvas {
+    display: block;
+    margin: 20px auto;
+}
+</style>
+</head>
+
+<body>
+
+<div id="viewer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+<script>
+const url = 'PANDUAN_LENGKAP.pdf';
+const viewer = document.getElementById('viewer');
+
+// disable klik kanan
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// disable copy
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && ['c','u','s','p','a'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+    }
+});
+
+// load PDF
+pdfjsLib.getDocument(url).promise.then(function(pdf) {
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+
+        pdf.getPage(pageNum).then(function(page) {
+
+            const viewport = page.getViewport({ scale: 1.5 });
+
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            viewer.appendChild(canvas);
+
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+
+            page.render(renderContext);
+        });
+    }
+});
+</script>
+
+</body>
+</html>
